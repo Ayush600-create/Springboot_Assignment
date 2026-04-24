@@ -1,0 +1,147 @@
+{
+  "info": {
+    "name": "Virality Engine API",
+    "_postman_id": "virality-engine-collection",
+    "description": "Backend Engineering Assignment — Core API & Guardrails",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Create Post (Human)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/posts", "host": ["{{baseUrl}}"], "path": ["api","posts"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"USER\",\n  \"content\": \"This is my first post!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Post (Bot)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/posts", "host": ["{{baseUrl}}"], "path": ["api","posts"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"BOT\",\n  \"content\": \"I am a bot posting content.\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "Add Human Comment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/posts/1/comments", "host": ["{{baseUrl}}"], "path": ["api","posts","1","comments"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"USER\",\n  \"content\": \"Great post!\",\n  \"depthLevel\": 0\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Bot Comment (Normal)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/posts/1/comments", "host": ["{{baseUrl}}"], "path": ["api","posts","1","comments"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"BOT\",\n  \"content\": \"I am a bot!\",\n  \"depthLevel\": 0,\n  \"postOwnerId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Bot Comment — Depth Exceeded (429)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/posts/1/comments", "host": ["{{baseUrl}}"], "path": ["api","posts","1","comments"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"BOT\",\n  \"content\": \"Too deep!\",\n  \"depthLevel\": 21,\n  \"postOwnerId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Bot Comment — Cooldown Test (send twice, 2nd = 429)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/posts/1/comments", "host": ["{{baseUrl}}"], "path": ["api","posts","1","comments"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": 2,\n  \"authorType\": \"BOT\",\n  \"content\": \"Cooldown test!\",\n  \"depthLevel\": 0,\n  \"postOwnerId\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Likes",
+      "item": [
+        {
+          "name": "Like a Post",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/posts/1/like", "host": ["{{baseUrl}}"], "path": ["api","posts","1","like"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Like a Post — Duplicate (409)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/posts/1/like", "host": ["{{baseUrl}}"], "path": ["api","posts","1","like"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Virality",
+      "item": [
+        {
+          "name": "Get Virality Score",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/posts/1/virality", "host": ["{{baseUrl}}"], "path": ["api","posts","1","virality"] }
+          }
+        },
+        {
+          "name": "Get Bot Count",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/posts/1/bot-count", "host": ["{{baseUrl}}"], "path": ["api","posts","1","bot-count"] }
+          }
+        }
+      ]
+    }
+  ]
+}

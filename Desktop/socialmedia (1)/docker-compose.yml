@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: socialmedia_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: socialmedia_db
+      PGTZ: Asia/Kolkata
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: socialmedia_redis
+    ports:
+      - "6379:6379"
