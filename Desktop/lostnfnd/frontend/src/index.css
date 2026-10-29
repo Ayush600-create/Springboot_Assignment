@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(56, 189, 248, 0.12), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(129, 140, 248, 0.12), transparent 50%),
+    #070b14;
+}
+
+.surface {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.92), rgba(11, 18, 32, 0.92));
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.factor-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.16);
+  overflow: hidden;
+}
+
+.factor-bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+}

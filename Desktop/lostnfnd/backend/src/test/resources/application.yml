@@ -1,0 +1,51 @@
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: jdbc:h2:mem:campusguard;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  mail:
+    host: localhost
+    port: 25
+
+campusguard:
+  jwt:
+    secret: test-jwt-secret-that-is-long-enough-for-hs256-keys
+  crypto:
+    key: "0123456789abcdef0123456789abcdef"
+  upload-dir: target/test-uploads
+  matching:
+    date-max-days: 14
+    weights:
+      text: 0.40
+      location: 0.20
+      date: 0.15
+      category: 0.10
+      brand: 0.10
+      color: 0.05
+    confidence:
+      high: 80.0
+      possible: 60.0
+  claim:
+    verification:
+      threshold: 60.0
+      max-attempts: 3
+  otp:
+    expiry-minutes: 10
+    max-attempts: 3
+  mail:
+    enabled: false
+  admin:
+    email: admin@test.local
+    password: TestAdmin!pass1
+  rate-limit:
+    login-per-minute: 100
+    verify-per-minute: 100

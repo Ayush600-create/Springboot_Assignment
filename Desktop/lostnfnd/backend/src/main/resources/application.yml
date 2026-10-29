@@ -1,0 +1,75 @@
+# CampusGuard — Smart Lost and Found
+spring:
+  application:
+    name: campusguard
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local,demo}
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/campusguard?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+  mail:
+    host: ${SMTP_HOST:}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${SMTP_AUTH:true}
+          starttls:
+            enable: ${SMTP_STARTTLS:true}
+
+server:
+  port: ${SERVER_PORT:8080}
+
+campusguard:
+  jwt:
+    secret: ${CAMPUSGUARD_JWT_SECRET:change-me-in-local-profile-not-for-production-use-32b}
+    expiration-ms: 86400000
+  crypto:
+    key: ${CAMPUSGUARD_ENCRYPTION_KEY:}
+  upload-dir: ${CAMPUSGUARD_UPLOAD_DIR:uploads}
+  college-email-suffixes:
+    - srmist.edu.in
+    - campusguard.local
+  auto-approve-college-email: false
+  matching:
+    date-max-days: 14
+    weights:
+      text: 0.40
+      location: 0.20
+      date: 0.15
+      category: 0.10
+      brand: 0.10
+      color: 0.05
+    confidence:
+      high: 80.0
+      possible: 60.0
+  claim:
+    verification:
+      threshold: 60.0
+      max-attempts: 3
+  otp:
+    expiry-minutes: 10
+    max-attempts: 3
+  mail:
+    enabled: ${SMTP_ENABLED:false}
+    from: ${SMTP_FROM:noreply@campusguard.local}
+  admin:
+    email: ${CAMPUSGUARD_ADMIN_EMAIL:}
+    password: ${CAMPUSGUARD_ADMIN_PASSWORD:}
+  rate-limit:
+    login-per-minute: 8
+    verify-per-minute: 10

@@ -1,0 +1,12 @@
+.env
+backend/src/main/resources/application-local.properties
+backend/target/
+frontend/node_modules/
+frontend/dist/
+uploads/
+*.log
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
